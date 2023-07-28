@@ -25,7 +25,7 @@ public class InMemoryMessageRecord extends MessageRecord {
   private static final int FORCE_BUBBLE_ID           = -3;
   private static final int HIDDEN_CONTACT_WARNING_ID = -4;
 
-  private InMemoryMessageRecord(long id,
+  public InMemoryMessageRecord(long id,
                                 String body,
                                 Recipient author,
                                 long threadId,

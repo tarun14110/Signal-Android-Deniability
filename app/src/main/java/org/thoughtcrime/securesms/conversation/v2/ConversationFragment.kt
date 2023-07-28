@@ -183,6 +183,7 @@ import org.thoughtcrime.securesms.conversation.v2.groups.ConversationGroupCallVi
 import org.thoughtcrime.securesms.conversation.v2.groups.ConversationGroupViewModel
 import org.thoughtcrime.securesms.conversation.v2.items.InteractiveConversationElement
 import org.thoughtcrime.securesms.conversation.v2.keyboard.AttachmentKeyboardFragment
+import org.thoughtcrime.securesms.conversationlist.model.Conversation
 import org.thoughtcrime.securesms.database.DraftTable
 import org.thoughtcrime.securesms.database.model.IdentityRecord
 import org.thoughtcrime.securesms.database.model.InMemoryMessageRecord
@@ -266,6 +267,7 @@ import org.thoughtcrime.securesms.revealable.ViewOnceMessageActivity
 import org.thoughtcrime.securesms.revealable.ViewOnceUtil
 import org.thoughtcrime.securesms.safety.SafetyNumberBottomSheet
 import org.thoughtcrime.securesms.sms.MessageSender
+import org.thoughtcrime.securesms.spoof.EditSpoofMessageActivity
 import org.thoughtcrime.securesms.stickers.StickerEventListener
 import org.thoughtcrime.securesms.stickers.StickerLocator
 import org.thoughtcrime.securesms.stickers.StickerManagementActivity
@@ -1991,6 +1993,27 @@ class ConversationFragment :
     }
   }
 
+  private fun handleSpoofMessage(message: ConversationMessage) {
+    val messageRecord = message.messageRecord
+
+    val bundle = Bundle()
+    val recipient = viewModel.recipientSnapshot ?: return
+
+    Log.w(TAG, "Recipients user name ${messageRecord.toRecipient.username}")
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_ID, messageRecord.id)
+    bundle.putString(EditSpoofMessageActivity.BUNDLE_MESSAGE_RECIPIENT_NAME, recipient.getDisplayName(requireContext()))
+    bundle.putString(EditSpoofMessageActivity.BUNDLE_MESSAGE_CONTENT, messageRecord.body)
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_DATE_SENT, messageRecord.dateSent)
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_DATE_RECEIVED, messageRecord.dateReceived)
+    bundle.putBoolean(EditSpoofMessageActivity.BUNDLE_MESSAGE_READ, messageRecord.isRemoteRead)
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_TYPE, messageRecord.type)
+
+    val target = Intent(context, EditSpoofMessageActivity::class.java)
+    target.putExtras(bundle)
+    startActivity(target)
+  }
+
+
   //region Message action handling
 
   private fun handleReplyToMessage(conversationMessage: ConversationMessage) {
@@ -3157,6 +3180,7 @@ class ConversationFragment :
         ConversationReactionOverlay.Action.PAYMENT_DETAILS -> handleViewPaymentDetails(conversationMessage)
         ConversationReactionOverlay.Action.VIEW_INFO -> handleDisplayDetails(conversationMessage)
         ConversationReactionOverlay.Action.DELETE -> handleDeleteMessages(conversationMessage.multiselectCollection.toSet())
+        ConversationReactionOverlay.Action.SPOOF -> handleSpoofMessage(conversationMessage)
       }
     }
   }

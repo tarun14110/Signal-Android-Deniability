@@ -110,6 +110,19 @@ class AccountSettingsFragment : DSLSettingsFragment(R.string.AccountSettingsFrag
 
       dividerPref()
 
+      sectionHeaderPref(R.string.settings_spoof_header)
+
+      switchPref(
+        title = DSLSettingsText.from(R.string.settings_spoof_enable),
+        summary = DSLSettingsText.from(R.string.settings_spoof_enable_description),
+        isChecked = state.spoofEnabled,
+        onClick = {
+          setSpoofEnabled(!state.spoofEnabled)
+        }
+      )
+
+      dividerPref()
+
       sectionHeaderPref(R.string.AccountSettingsFragment__account)
 
       if (SignalStore.account().isRegistered) {
@@ -262,5 +275,10 @@ class AccountSettingsFragment : DSLSettingsFragment(R.string.AccountSettingsFrag
       SignalStore.pinValues().setPinRemindersEnabled(true)
       viewModel.refreshState()
     }
+  }
+
+  private fun setSpoofEnabled(enabled: Boolean) {
+    SignalStore.spoofValues().isSpoofEnabled = enabled
+    viewModel.refreshState()
   }
 }

@@ -16,6 +16,7 @@
  */
 package org.thoughtcrime.securesms.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -3296,6 +3297,59 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     notifyConversationListListeners()
     return rowsDeleted
   }
+
+  fun updateMessage(messageId: Long, newBody: String, read: Boolean, type: Long, dateSent: Long, dateReceived: Long): Boolean {
+    val threadId = getThreadIdForMessage(messageId)
+    return updateMessage(messageId, threadId, newBody, read, type, dateSent, dateReceived)
+  }
+
+  fun updateMessage(messageId: Long, notify: Boolean, newBody: String, read: Boolean, type: Long, dateSent: Long, dateReceived: Long): Boolean {
+    val threadId = getThreadIdForMessage(messageId)
+    return updateMessage(messageId, threadId, notify, newBody, read, type, dateSent, dateReceived)
+  }
+
+  fun updateMessage(messageId: Long, threadId: Long, newBody: String, read: Boolean, type: Long, dateSent: Long, dateReceived: Long): Boolean {
+    return updateMessage(messageId, threadId, true, newBody, read, type, dateSent, dateReceived)
+  }
+
+  @SuppressLint("LogTagInlined")
+  private fun updateMessage(messageId: Long, threadId: Long, notify: Boolean, newBody: String, read: Boolean, type: Long, dateSent: Long, dateReceived: Long): Boolean {
+    Log.d(TAG, "updateMessageBody($messageId)")
+
+
+    val database = databaseHelper.signalWritableDatabase
+
+    writableDatabase.withinTransaction { db ->
+      val rowsUpdated = db
+        .update(TABLE_NAME)
+        .values(BODY to newBody,
+              READ_RECEIPT_COUNT to if (read) 1 else 0,
+              TYPE to type,
+              DATE_SENT to dateSent,
+              DATE_RECEIVED to dateReceived)
+        .where("$ID = ?", messageId)
+        .run()
+
+      if (rowsUpdated > 0) {
+        Log.w(TAG, "Database updated row = $rowsUpdated")
+      } else {
+        Log.w(TAG, "Database updated row = 0")
+      }
+    }
+
+    threads.setLastScrolled(threadId, 0)
+    val threadUpdated = threads.update(threadId, false)
+
+    if (notify) {
+      notifyConversationListeners(threadId)
+      notifyStickerListeners()
+      notifyStickerPackListeners()
+      OptimizeMessageSearchIndexJob.enqueue()
+    }
+
+    return threadUpdated
+  }
+
 
   fun deleteMessage(messageId: Long): Boolean {
     val threadId = getThreadIdForMessage(messageId)

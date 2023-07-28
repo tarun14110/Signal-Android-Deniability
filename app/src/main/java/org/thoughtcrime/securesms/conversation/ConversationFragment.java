@@ -169,6 +169,7 @@ import org.thoughtcrime.securesms.revealable.ViewOnceMessageActivity;
 import org.thoughtcrime.securesms.revealable.ViewOnceUtil;
 import org.thoughtcrime.securesms.safety.SafetyNumberBottomSheet;
 import org.thoughtcrime.securesms.sms.MessageSender;
+import org.thoughtcrime.securesms.spoof.EditSpoofMessageActivity;
 import org.thoughtcrime.securesms.stickers.StickerLocator;
 import org.thoughtcrime.securesms.stickers.StickerPackPreviewActivity;
 import org.thoughtcrime.securesms.stories.Stories;
@@ -1153,6 +1154,25 @@ public class ConversationFragment extends LoggingFragment implements Multiselect
         return null;
       }
     }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, message);
+  }
+
+  private void handleSpoofMessage(final ConversationMessage message) {
+    MessageRecord messageRecord = message.getMessageRecord();
+
+    Bundle bundle = new Bundle();
+
+    Log.w(TAG, "Recipients user name " + messageRecord.getToRecipient().getUsername());
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_ID, messageRecord.getId());
+    bundle.putString(EditSpoofMessageActivity.BUNDLE_MESSAGE_RECIPIENT_NAME, this.recipient.get().getDisplayName(this.requireContext()));
+    bundle.putString(EditSpoofMessageActivity.BUNDLE_MESSAGE_CONTENT, messageRecord.getBody());
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_DATE_SENT, messageRecord.getDateSent());
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_DATE_RECEIVED, messageRecord.getDateReceived());
+    bundle.putBoolean(EditSpoofMessageActivity.BUNDLE_MESSAGE_READ, messageRecord.isRemoteRead());
+    bundle.putLong(EditSpoofMessageActivity.BUNDLE_MESSAGE_TYPE, messageRecord.getType());
+
+    Intent target = new Intent(this.getContext(), EditSpoofMessageActivity.class);
+    target.putExtras(bundle);
+    this.startActivity(target);
   }
 
   private void handleReplyMessage(final ConversationMessage message) {
@@ -2249,6 +2269,9 @@ public class ConversationFragment extends LoggingFragment implements Multiselect
     @Override
     public void onActionSelected(@NonNull ConversationReactionOverlay.Action action) {
       switch (action) {
+        case SPOOF:
+          handleSpoofMessage(conversationMessage);
+          break;
         case REPLY:
           handleReplyMessage(conversationMessage);
           break;

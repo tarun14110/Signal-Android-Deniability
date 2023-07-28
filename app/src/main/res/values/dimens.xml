@@ -221,5 +221,6 @@
     <dimen name="media_rail_thumbnail_size">44dp</dimen>
     <dimen name="registrationactivity_text_view_padding">32dp</dimen>
 
+    <dimen name="fab_margin">16dp</dimen>
     <dimen name="safety_number_qr_peek">24dp</dimen>
 </resources>

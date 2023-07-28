@@ -7,6 +7,7 @@ import org.thoughtcrime.securesms.database.model.MediaMmsMessageRecord;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 import org.thoughtcrime.securesms.recipients.Recipient;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.util.MessageRecordUtil;
 import org.thoughtcrime.securesms.util.MessageConstraintsUtil;
 
@@ -17,6 +18,7 @@ public final class MenuState {
 
   private static final int MAX_FORWARDABLE_COUNT = 32;
 
+  private final boolean spoof;
   private final boolean forward;
   private final boolean reply;
   private final boolean details;
@@ -29,6 +31,7 @@ public final class MenuState {
   private final boolean edit;
 
   private MenuState(@NonNull Builder builder) {
+    this.spoof     = builder.spoof;
     forward        = builder.forward;
     reply          = builder.reply;
     details        = builder.details;
@@ -39,6 +42,10 @@ public final class MenuState {
     reactions      = builder.reactions;
     paymentDetails = builder.paymentDetails;
     edit           = builder.edit;
+  }
+
+  boolean shouldShowSpoofAction() {
+    return spoof;
   }
 
   public boolean shouldShowForwardAction() {
@@ -88,6 +95,7 @@ public final class MenuState {
   {
     
     Builder builder         = new Builder();
+    boolean spoof           = false;
     boolean actionMessage   = false;
     boolean hasText         = false;
     boolean sharedContact   = false;
@@ -98,6 +106,10 @@ public final class MenuState {
     boolean mediaIsSelected = false;
     boolean hasGift         = false;
     boolean hasPayment       = false;
+
+    if(SignalStore.spoofValues().isSpoofEnabled()) {
+      spoof = true;
+    }
 
     for (MultiselectPart part : selectedParts) {
       MessageRecord messageRecord = part.getMessageRecord();
@@ -155,7 +167,8 @@ public final class MenuState {
                                      .size();
 
     if (uniqueRecords > 1) {
-      builder.shouldShowForwardAction(shouldShowForwardAction)
+      builder.shouldShowSpoof(spoof)
+             .shouldShowForwardAction(shouldShowForwardAction)
              .shouldShowReplyAction(false)
              .shouldShowDetailsAction(false)
              .shouldShowSaveAttachmentAction(false)
@@ -166,7 +179,8 @@ public final class MenuState {
 
       MessageRecord messageRecord = multiSelectRecord.getMessageRecord();
 
-      builder.shouldShowResendAction(messageRecord.isFailed())
+      builder.shouldShowSpoof(spoof)
+             .shouldShowResendAction(messageRecord.isFailed())
              .shouldShowSaveAttachmentAction(mediaIsSelected                                             &&
                                              !actionMessage                                              &&
                                              !viewOnce                                                   &&
@@ -186,7 +200,8 @@ public final class MenuState {
                              MessageConstraintsUtil.isValidEditMessageSend(multiSelectRecord.getConversationMessage().getOriginalMessage(), System.currentTimeMillis()));
     }
 
-    return builder.shouldShowCopyAction(!actionMessage && !remoteDelete && hasText && !hasGift && !hasPayment)
+    return builder.shouldShowSpoof(spoof)
+        .shouldShowCopyAction(!actionMessage && !remoteDelete && hasText && !hasGift && !hasPayment)
                   .shouldShowDeleteAction(!hasInMemory && onlyContainsCompleteMessages(selectedParts))
                   .shouldShowReactions(!conversationRecipient.isReleaseNotes())
                   .shouldShowPaymentDetails(hasPayment)
@@ -224,6 +239,7 @@ public final class MenuState {
 
   private final static class Builder {
 
+    private boolean spoof;
     private boolean forward;
     private boolean reply;
     private boolean details;
@@ -234,6 +250,11 @@ public final class MenuState {
     private boolean reactions;
     private boolean paymentDetails;
     private boolean edit;
+
+    @NonNull Builder shouldShowSpoof(boolean spoof) {
+      this.spoof = spoof;
+      return this;
+    }
 
     @NonNull Builder shouldShowForwardAction(boolean forward) {
       this.forward = forward;
