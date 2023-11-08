@@ -25,6 +25,8 @@ tasks.withType(KotlinCompile).configureEach {
         jvmTarget = signalKotlinJvmTarget
     }
 }
+//
+//tasks.named("sourcesJar").configure { dependsOn("classes") }
 
 configurations {
     ideaTestFixturesImplementation { extendsFrom testFixturesImplementation; canBeConsumed false; canBeResolved true }

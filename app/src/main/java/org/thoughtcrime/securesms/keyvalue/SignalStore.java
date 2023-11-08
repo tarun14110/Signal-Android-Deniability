@@ -23,6 +23,8 @@ public final class SignalStore {
   private final RegistrationValues        registrationValues;
   private final PinValues                 pinValues;
   private final RemoteConfigValues        remoteConfigValues;
+
+  private final SpoofValues spoofValues;
   private final StorageServiceValues      storageServiceValues;
   private final UiHints                   uiHints;
   private final TooltipValues             tooltipValues;
@@ -68,6 +70,7 @@ public final class SignalStore {
     this.registrationValues        = new RegistrationValues(store);
     this.pinValues                 = new PinValues(store);
     this.remoteConfigValues        = new RemoteConfigValues(store);
+    this.spoofValues               = new SpoofValues(store);
     this.storageServiceValues      = new StorageServiceValues(store);
     this.uiHints                   = new UiHints(store);
     this.tooltipValues             = new TooltipValues(store);
@@ -98,6 +101,7 @@ public final class SignalStore {
     registrationValues().onFirstEverAppLaunch();
     pinValues().onFirstEverAppLaunch();
     remoteConfigValues().onFirstEverAppLaunch();
+    spoofValues().onFirstEverAppLaunch();
     storageService().onFirstEverAppLaunch();
     uiHints().onFirstEverAppLaunch();
     tooltips().onFirstEverAppLaunch();
@@ -127,6 +131,7 @@ public final class SignalStore {
     keys.addAll(registrationValues().getKeysToIncludeInBackup());
     keys.addAll(pinValues().getKeysToIncludeInBackup());
     keys.addAll(remoteConfigValues().getKeysToIncludeInBackup());
+    keys.addAll(spoofValues().getKeysToIncludeInBackup());
     keys.addAll(storageService().getKeysToIncludeInBackup());
     keys.addAll(uiHints().getKeysToIncludeInBackup());
     keys.addAll(tooltips().getKeysToIncludeInBackup());
@@ -185,6 +190,8 @@ public final class SignalStore {
   public static @NonNull RemoteConfigValues remoteConfigValues() {
     return getInstance().remoteConfigValues;
   }
+
+  public static @NonNull SpoofValues spoofValues() { return getInstance().spoofValues; }
 
   public static @NonNull StorageServiceValues storageService() {
     return getInstance().storageServiceValues;

@@ -22,7 +22,8 @@ class AccountSettingsViewModel : ViewModel() {
       pinRemindersEnabled = SignalStore.pinValues().arePinRemindersEnabled(),
       registrationLockEnabled = SignalStore.svr().isRegistrationLockEnabled,
       userUnregistered = TextSecurePreferences.isUnauthorizedReceived(ApplicationDependencies.getApplication()),
-      clientDeprecated = SignalStore.misc().isClientDeprecated
+      clientDeprecated = SignalStore.misc().isClientDeprecated,
+      spoofEnabled = SignalStore.spoofValues().isSpoofEnabled
     )
   }
 }

@@ -1,4 +1,18 @@
-# Signal Android 
+# Signal Android Deniability
+
+## Usage
+
+This is a simple modification of the Signal app to allow modification of received and sent messages in the local database. All changes made are local and permanent. To enable spoofing, navigate to `Settings->Account` and enable the `Enable Spoofing` option. Finally, press and hold on a message to show the option to spoof.
+
+**NOTE:** All changes made by spoofing are permanent and cannot be restored.
+
+## To Do
+* Create empty conversations with arbitrary/made-up users
+* Insert messages into empty conversations
+* Insert messages before/after other messages and/or the whole conversation
+
+
+# Original README
 
 Signal is a simple, powerful, and secure messenger.
 

@@ -111,6 +111,18 @@
                  android:theme="@style/TextSecure.LightTheme"
                  android:largeHeap="true">
 
+        <activity
+            android:name=".spoof.EditSpoofMessageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_edit_spoof_message"
+            android:theme="@style/Signal.DayNight.NoActionBar" />
+
+        <activity
+            android:name=".spoof.NewSpoofMessageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_new_spoof_message"
+            android:theme="@style/Signal.DayNight.NoActionBar" />
+
     <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />

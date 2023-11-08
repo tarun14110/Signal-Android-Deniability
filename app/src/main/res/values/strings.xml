@@ -3349,7 +3349,9 @@
     <string name="conversation_selection__menu_copy">Copy</string>
     <!-- Button to delete a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_delete">Delete</string>
-    <!-- Button to forward a message to another person or group chat; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
+    <!-- Button to edit a message. -->
+   <string name="conversation_selection__menu_spoof">Edit</string>
+   <!-- Button to forward a message to another person or group chat; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD  -->
     <string name="conversation_selection__menu_forward">Forward</string>
     <!-- Button to reply to a message; Action item with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
     <string name="conversation_selection__menu_reply">Reply</string>
@@ -6400,6 +6402,49 @@
     <string name="GrantFullScreenIntentPermission_bottomsheet_subtitle">To receive call notifications from your contacts and groups:</string>
     <!-- Step 2 of bottom sheet shown after tapping "Turn on" from the megaphone to re-enable full screen notifications for incoming call notifications, it indicates the name of the setting that needs to be re-enabled -->
     <string name="GrantFullScreenIntentPermission_bottomsheet_step2">2. %1$s Allow full screen notifications</string>
+
+    <string name="menu_spoof">Edit messages</string>
+
+    <string name="settings_spoof_header">Editing</string>
+    <string name="settings_spoof_enable">Enable Editing</string>
+    <string name="settings_spoof_enable_description">Show menu options for faking messages; you can disable this when you are done</string>
+
+    <string name="spoof_dialog_location_modify">Modify</string>
+    <string name="spoof_dialog_location_before">Insert before</string>
+    <string name="spoof_dialog_location_after">Insert after</string>
+    <string name="spoof_dialog_location_beginning">Insert at beginning</string>
+    <string name="spoof_dialog_location_end">Insert at end</string>
+
+    <string name="spoof_dialog_location_modify_description">Modify this item</string>
+    <string name="spoof_dialog_location_before_description">Insert a new message before the selected one</string>
+    <string name="spoof_dialog_location_after_description">Insert a new message after the selected one</string>
+    <string name="spoof_dialog_location_beginning_description">Insert a new message at the start of the conversation</string>
+    <string name="spoof_dialog_location_end_description">Insert a new message at the end of the conversation</string>
+
+
+    <string name="spoof_dialog_message_content">Message content</string>
+    <string name="spoof_dialog_sender">Message sender</string>
+    <string name="spoof_dialog_sender_me">Me</string>
+    <string name="spoof_dialog_sender_other">Other</string>
+    <string name="spoof_dialog_datetime">Date/Time</string>
+    <string name="spoof_dialog_default_date">1/1/1980</string>
+    <string name="spoof_dialog_default_time">12:00 am</string>
+    <string name="spoof_dialog_show_read">Show as read</string>
+
+    <string name="spoof_dialog_new_title">Edit Message</string>
+    <string name="spoof_dialog_edit_title">Edit Message</string>
+    <string name="spoof_dialog_ok">Ok</string>
+    <string name="spoof_dialog_cancel">Cancel</string>
+    <string name="title_activity_new_spoof_message">NewSpoofMessageActivity</string>
+    <string name="title_activity_edit_spoof_message">EditSpoofMessageActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!-- EOF -->
 </resources>

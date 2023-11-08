@@ -712,6 +712,10 @@ public final class ConversationReactionOverlay extends FrameLayout {
 
     List<ActionItem> items = new ArrayList<>();
 
+    if (menuState.shouldShowSpoofAction()) {
+      items.add(new ActionItem(R.drawable.symbol_edit_24, getResources().getString(R.string.conversation_selection__menu_spoof), () -> handleActionItemClicked(Action.SPOOF)));
+    }
+
     if (menuState.shouldShowReplyAction()) {
       items.add(new ActionItem(R.drawable.symbol_reply_24, getResources().getString(R.string.conversation_selection__menu_reply), () -> handleActionItemClicked(Action.REPLY)));
     }
@@ -937,6 +941,7 @@ public final class ConversationReactionOverlay extends FrameLayout {
   }
 
   public enum Action {
+    SPOOF,
     REPLY,
     EDIT,
     FORWARD,

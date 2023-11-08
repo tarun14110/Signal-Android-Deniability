@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.thoughtcrime.securesms.util.views.DarkOverflowToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/signal_m3_toolbar_height"
+        android:background="@null"
+        android:minHeight="@dimen/signal_m3_toolbar_height"
+        android:theme="@style/TextSecure.LightActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationContentDescription="@string/DSLSettingsToolbar__navigate_up"
+        app:navigationIcon="@drawable/ic_arrow_left_24"
+        app:titleTextAppearance="@style/Signal.Text.TitleLarge"
+        tools:title="@string/spoof_dialog_edit_title" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Signal.Text.LabelMedium"
+            android:text="@string/spoof_dialog_message_content">
+        </TextView>
+
+        <EditText
+            android:id="@+id/spoof_text_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp">
+        </Space>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Signal.Text.LabelMedium"
+            android:text="@string/spoof_dialog_sender">
+        </TextView>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/spoof_sender_radio">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:id="@+id/spoof_sender_radio_me"
+                android:text="@string/spoof_dialog_sender_me">
+            </RadioButton>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spoof_sender_radio_other"
+                android:text="@string/spoof_dialog_sender_other"></RadioButton>
+        </RadioGroup>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp">
+        </Space>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Signal.Text.LabelMedium"
+            android:text="@string/spoof_dialog_datetime">
+        </TextView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spoof_date_button"
+                style="@style/Signal.Widget.Button.Base.Tonal"
+                android:layout_marginRight="8dp"
+                android:text="@string/spoof_dialog_default_date">
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spoof_time_button"
+                style="@style/Signal.Widget.Button.Base.Tonal"
+                android:text="@string/spoof_dialog_default_time">
+            </com.google.android.material.button.MaterialButton>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!--        <Space-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="16dp">-->
+        <!--        </Space>-->
+
+        <!--        <TextView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            style="@style/Signal.Text.LabelMedium"-->
+        <!--            android:text="@string/spoof_dialog_show_read">-->
+        <!--        </TextView>-->
+
+        <!--        <Switch-->
+        <!--            android:id="@+id/spoof_read_check"-->
+        <!--            android:text="@string/spoof_dialog_show_read"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content">-->
+        <!--        </Switch>-->
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp">
+        </Space>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ok_button"
+                style="@style/Signal.Widget.Button.Base.Primary"
+                android:text="@string/spoof_dialog_ok">
+            </com.google.android.material.button.MaterialButton>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

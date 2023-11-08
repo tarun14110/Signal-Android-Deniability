@@ -5,4 +5,5 @@
     <dimen name="transfer_top_padding">16dp</dimen>
     <dimen name="transfer_split_top_padding">8dp</dimen>
     <dimen name="transfer_item_spacing">16dp</dimen>
+    <dimen name="fab_margin">48dp</dimen>
 </resources>
